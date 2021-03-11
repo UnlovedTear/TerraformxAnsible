@@ -1,0 +1,85 @@
+---
+- hosts: ansible
+  tasks:
+  - name: apt-update
+    become: yes
+    become_method: sudo
+    shell: "apt-get update"
+
+  - name: install apache2
+    become: yes
+    become_method: sudo    
+    apt: name=apache2 state=latest
+
+  - name: install php
+    become: yes
+    become_method: sudo    
+    apt: name=php state=latest
+
+  - name: install mysql
+    become: yes
+    become_method: sudo    
+    apt: name=mysql state=latest
+
+  - name: install libapache2-mod-php
+    become: yes
+    become_method: sudo    
+    apt: name=libapache2-mod-php state=latest
+
+  - name: install php-mysql
+    become: yes
+    become_method: sudo    
+    apt: name=php-mysql state=latest
+
+  - name: install php-mbstring
+    become: yes
+    become_method: sudo    
+    apt: name=php-mbstring state=latest
+
+  - name: install php-intl
+    become: yes
+    become_method: sudo    
+    apt: name=php-intl state=latest
+
+  - name: install php-xml
+    become: yes
+    become_method: sudo    
+    apt: name=php-xml state=latest
+
+  - name: install php-xmlrpc
+    become: yes
+    become_method: sudo    
+    apt: name=php-xmlrpc state=latest
+
+  - name: install php-pgsq
+    become: yes
+    become_method: sudo    
+    apt: name=php-pgsq state=latest
+
+  - name: install php-gd
+    become: yes
+    become_method: sudo    
+    apt: name=php-gd state=latest
+
+#  - name: creates directory
+#    file:
+#    path: /tmp/mahara
+#    state: directory
+ 
+#  - name: Download mahara-19.10.2.tar.gz
+#    get_url:
+#    url: https://launchpad.net/mahara/19.10/19.10.2/+download/mahara-19.10.2.tar.gz
+#    dest: /tmp/mahara
+
+  - name: cp mahara
+    become: yes
+    become_method: sudo
+    shell: "cp -r /tmp/mahara /var/www"
+
+  - name: passwd mysql
+    copy: src=script.sql dest=/tmp/
+
+  - name: mysql script
+    become: yes
+    become_method: sudo
+    shell: "mysql </tmp/script.sql"
